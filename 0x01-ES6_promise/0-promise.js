@@ -1,9 +1,5 @@
-function getResponseFromAPI() {
-  return new Promise(((myResolve, myReject) => {
-    myResolve(true);
-  }));
+export default function getResponseFromAPI() {
+  return new Promise((resolve) => {
+    resolve('true');
+  });
 }
-
-getResponseFromAPI().then((value) => {
-  console.log(value);
-});
