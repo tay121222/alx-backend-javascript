@@ -30,8 +30,8 @@ const app = http.createServer(async (req, res) => {
         studentGroups[field].push(student);
       }
 
-      let response = `Number of students: ${lines.length - 1}\n`;
-
+      let response = 'This is the list of our students\n';
+      response += `Number of students: ${lines.length - 1}\n`;
       for (const [field, students] of Object.entries(studentGroups)) {
         const studentNames = students.map((student) => student.firstname).join(', ');
         response += `Number of students in ${field}: ${students.length}. List: ${studentNames}\n`;
