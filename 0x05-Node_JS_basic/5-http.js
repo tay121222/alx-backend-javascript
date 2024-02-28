@@ -14,6 +14,8 @@ const app = http.createServer(async (req, res) => {
 
       const studentGroups = {};
       const fieldNames = lines[0].split(',').map((name) => name.trim());
+      let response = 'This is the list of our students\n';
+      response += `Number of students: ${lines.length - 1}\n`;
 
       for (let i = 1; i < lines.length; i += 1) {
         const fields = lines[i].split(',');
@@ -30,13 +32,11 @@ const app = http.createServer(async (req, res) => {
         studentGroups[field].push(student);
       }
 
-      let response = 'This is the list of our students\n';
-      response += `Number of students: ${lines.length - 1}\n`;
       for (const [field, students] of Object.entries(studentGroups)) {
         const studentNames = students.map((student) => student.firstname).join(', ');
         response += `Number of students in ${field}: ${students.length}. List: ${studentNames}\n`;
       }
-
+      response = response.trim();
       res.end(response);
     } catch (error) {
       res.end('Cannot load the database');
