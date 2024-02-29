@@ -8,7 +8,7 @@ const app = http.createServer(async (req, res) => {
     res.end('Hello Holberton School!');
   } else if (req.url === '/students') {
     try {
-      const dataPath = 'database.csv';
+      const dataPath = process.argv[2];
       const data = await fs.readFile(dataPath, 'utf8');
       const lines = data.trim().split('\n').filter((line) => line.trim() !== '');
 
@@ -37,12 +37,11 @@ const app = http.createServer(async (req, res) => {
         response += `Number of students in ${field}: ${students.length}. List: ${studentNames}\n`;
       }
       response = response.trim();
+      res.statusCode = 200;
       res.end(response);
     } catch (error) {
       res.end('Cannot load the database');
     }
-  } else {
-    res.end('Invalid URL path');
   }
 });
 
