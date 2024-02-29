@@ -1,5 +1,5 @@
 const http = require('http');
-const fs = require('fs').promises;
+const countStudents = require('./3-read_file_async');
 
 const app = http.createServer(async (req, res) => {
   res.writeHead(200, { 'Content-Type': 'text/plain' });
@@ -9,39 +9,14 @@ const app = http.createServer(async (req, res) => {
   } else if (req.url === '/students') {
     try {
       const dataPath = process.argv[2];
-      const data = await fs.readFile(dataPath, 'utf8');
-      const lines = data.trim().split('\n').filter((line) => line.trim() !== '');
-
-      const studentGroups = {};
-      const fieldNames = lines[0].split(',').map((name) => name.trim());
-      let response = 'This is the list of our students\n';
-      response += `Number of students: ${lines.length - 1}\n`;
-
-      for (let i = 1; i < lines.length; i += 1) {
-        const fields = lines[i].split(',');
-        const field = fields.pop().trim();
-        const student = {};
-        fields.forEach((value, index) => {
-          student[fieldNames[index]] = value.trim();
-        });
-
-        if (!studentGroups[field]) {
-          studentGroups[field] = [];
-        }
-
-        studentGroups[field].push(student);
-      }
-
-      for (const [field, students] of Object.entries(studentGroups)) {
-        const studentNames = students.map((student) => student.firstname).join(', ');
-        response += `Number of students in ${field}: ${students.length}. List: ${studentNames}\n`;
-      }
-      response = response.trim();
-      res.statusCode = 200;
-      res.end(response);
+      await countStudents(dataPath);
+      res.end();
     } catch (error) {
+      console.error('Error loading database:', error.message);
       res.end('Cannot load the database');
     }
+  } else {
+    res.end('Invalid URL path');
   }
 });
 
