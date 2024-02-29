@@ -40,10 +40,10 @@ const app = http.createServer(async (req, res) => {
       res.end(response);
     } catch (error) {
       console.error('Error loading database:', error.message);
-      res.end('Cannot load the database');
+      let errresponse = 'This is the list of our students\n';
+      errresponse += 'Cannot load the database';
+      res.end(errresponse);
     }
-  } else {
-    res.end('Invalid URL path');
   }
 });
 
