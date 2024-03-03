@@ -21,4 +21,8 @@ describe('calculateNumber', function () {
   it('should return 4 when the second number is rounded to 3', function () {
     assert.strictEqual(calculateNumber(1.0, 2.5), 4);
   });
+  
+  it('should return 3 when the second number is rounded to 2', function () {
+    assert.strictEqual(calculateNumber(1.0, 2.4), 3);
+  });
 });
