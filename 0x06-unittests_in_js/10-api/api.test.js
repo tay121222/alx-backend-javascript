@@ -30,6 +30,13 @@ describe('basic Integration testing', () => {
     });
   }));
 
+  it('Correct result when :id is a number?', (done) => {
+    request.get('http://localhost:7865/cart/12', (error, response, body) => {
+      expect(body).to.equal('Payment methods for cart 12');
+      done();
+    });
+  });
+
   it('returns the correct object', () => new Promise((done) => {
     request.get('http://localhost:7865/available_payments', (error, response, body) => {
       const expectedResponse = {
